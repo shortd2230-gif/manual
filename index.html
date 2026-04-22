@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支援員補助マニュアル</title>
+<style>
+  :root {
+    --navy:      #1B3A5C;
+    --teal:      #028090;
+    --teal-lt:   #E1F5EE;
+    --teal-bd:   #9FE1CB;
+    --amber:     #B45309;
+    --amber-lt:  #FAEEDA;
+    --amber-bd:  #FAC775;
+    --red:       #BE123C;
+    --red-lt:    #FECDD3;
+    --red-bd:    #FDA4AF;
+    --blue-lt:   #E6F1FB;
+    --blue-bd:   #B5D4F4;
+    --blue:      #1D4ED8;
+    --purple-lt: #EEEDFE;
+    --purple-bd: #CECBF6;
+    --purple:    #5B21B6;
+    --green-lt:  #EAF3DE;
+    --green-bd:  #C0DD97;
+    --green:     #3B6D11;
+    --gray-lt:   #F4F2EC;
+    --gray-bd:   #D3D1C7;
+    --gray:      #4B5563;
+    --text:      #1E293B;
+    --text-mid:  #475569;
+    --bg:        #F7F6F2;
+    --white:     #FFFFFF;
+    --border:    rgba(0,0,0,0.09);
+    --border-md: rgba(0,0,0,0.15);
+    --r-md: 8px;
+    --r-lg: 12px;
+    --r-xl: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ヘッダー */
+  .header { background: var(--navy); padding: 22px 24px 18px; }
+  .header-inner { max-width: 900px; margin: 0 auto; }
+  .header-label { font-size: 11px; letter-spacing: .1em; color: rgba(255,255,255,.5); margin-bottom: 4px; }
+  .header-title { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .header-sub { font-size: 12px; color: rgba(255,255,255,.55); }
+  .header-note { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 6px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 7px; }
+
+  /* コンテナ */
+  .container { max-width: 900px; margin: 0 auto; padding: 20px 14px 48px; }
+
+  /* タブ */
+  .tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 18px; }
+  .tab {
+    padding: 6px 15px; border-radius: 99px;
+    border: 1px solid var(--border-md);
+    background: var(--white); color: var(--text-mid);
+    font-size: 12px; font-family: inherit;
+    cursor: pointer; transition: all .15s; white-space: nowrap;
+  }
+  .tab.active { background: var(--navy); color: #fff; border-color: transparent; }
+  .tab:hover:not(.active) { filter: brightness(.96); }
+  .panel { display: none; animation: fadeIn .18s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* セクションタイトル */
+  .sec-title {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em;
+    color: var(--text-mid); text-transform: uppercase;
+    margin: 1.5rem 0 .75rem;
+    padding-bottom: 7px; border-bottom: 1px solid var(--border);
+  }
+
+  /* カード */
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 14px 16px; margin-bottom: 10px; }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .card-body { font-size: 12.5px; color: var(--text-mid); line-height: 1.75; }
+
+  /* タグ */
+  .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; margin: 2px 3px 2px 0; }
+  .tag-warn   { background: var(--red-lt);    color: var(--red); }
+  .tag-point  { background: var(--teal-lt);   color: var(--teal); }
+  .tag-check  { background: var(--blue-lt);   color: var(--blue); }
+  .tag-where  { background: var(--amber-lt);  color: var(--amber); }
+  .tag-item   { background: var(--purple-lt); color: var(--purple); }
+  .tag-act    { background: var(--green-lt);  color: var(--green); }
+
+  /* アイコン円 */
+  .icon-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+
+  /* ステップリスト */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; }
+  .step:not(:last-child) { border-bottom: 1px dashed var(--border); }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-content { flex: 1; }
+  .step-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .step-body { font-size: 12px; color: var(--text-mid); line-height: 1.7; }
+
+  /* チェックリスト */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .checklist li { display: flex; gap: 9px; font-size: 12.5px; color: var(--text); line-height: 1.55; align-items: flex-start; }
+  .chk {
+    display: block; flex-shrink: 0;
+    width: 16px; height: 16px; border-radius: 4px;
+    border: 1.5px solid var(--border-md);
+    margin-top: 1px; background: var(--white);
+    cursor: pointer; position: relative;
+    transition: background .13s, border-color .13s;
+  }
+  .chk.checked { background: var(--navy); border-color: var(--navy); }
+  .chk.checked::after { content: ''; position: absolute; left: 3px; top: 1px; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg); }
+
+  /* グリッド */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+
+  /* ポイントボックス */
+  .point-box { border-radius: var(--r-md); padding: 10px 14px; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+  .point-box.warn   { background: var(--red-lt);   border: 1px solid var(--red-bd); }
+  .point-box.info   { background: var(--teal-lt);  border: 1px solid var(--teal-bd); }
+  .point-box.amber  { background: var(--amber-lt); border: 1px solid var(--amber-bd); }
+  .point-box-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .point-box-body { font-size: 12px; color: var(--text); line-height: 1.7; }
+  .point-box-title { font-size: 12.5px; font-weight: 600; margin-bottom: 3px; }
+
+  /* 場所バッジ */
+  .place-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: var(--amber-lt); color: var(--amber); border: 1px solid var(--amber-bd); margin-bottom: 8px; }
+
+  /* 活動カード */
+  .act-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 10px; }
+  .act-header { padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+  .act-header-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .act-header-title { font-size: 14px; font-weight: 600; }
+  .act-body { padding: 4px 14px 14px; }
+
+  /* 重要カード */
+  .important-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+  .important-card { background: var(--white); border-radius: var(--r-lg); border: 1px solid var(--border); padding: 14px; }
+  .important-card .ic-icon { font-size: 22px; margin-bottom: 8px; }
+  .important-card .ic-title { font-size: 12.5px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .important-card .ic-body { font-size: 12px; color: var(--text-mid); line-height: 1.7; }
+
+  /* フッター */
+  .footer { text-align: center; font-size: 11px; color: var(--text-mid); padding: 20px 14px; border-top: 1px solid var(--border); margin-top: 24px; }
+
+  /* 印刷 */
+  @media print {
+    body { background: #fff; }
+    .tabs { display: none; }
+    .panel { display: block !important; }
+    .header { background: #1B3A5C; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-label">📋 STAFF MANUAL</div>
+    <div class="header-title">支援員補助マニュアル</div>
+    <div class="header-sub">誰でも・いつでも・迷わず動けるガイド</div>
+    <div class="header-note">更新日：2025年10月 ／ 不明点はリーダーへ確認してください</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('basics')">🌟 基本姿勢</button>
+    <button class="tab" onclick="showTab('arrival')">🚪 出勤・到着</button>
+    <button class="tab" onclick="showTab('daily')">📋 日常業務</button>
+    <button class="tab" onclick="showTab('shokudo')">🍱 食堂業務</button>
+    <button class="tab" onclick="showTab('facility')">🏢 施設管理</button>
+    <button class="tab" onclick="showTab('activities')">🎨 作業活動</button>
+    <button class="tab" onclick="showTab('supplies')">📦 備品管理</button>
+  </div>
+
+  <!-- 基本姿勢 -->
+  <div id="tab-basics" class="panel active">
+    <div class="sec-title">🌟 支援の基本姿勢</div>
+    <div class="important-grid">
+      <div class="important-card">
+        <div class="ic-icon">📢</div>
+        <div class="ic-title">ほうれんそう（報・連・相）</div>
+        <div class="ic-body">
+          <strong>報告</strong>：気づいたことは必ずリーダーへ報告<br>
+          <strong>連絡</strong>：変化・変更はすぐ共有する<br>
+          <strong>相談</strong>：迷ったら自己判断せず相談する
+        </div>
+      </div>
+      <div class="important-card">
+        <div class="ic-icon">🏷️</div>
+        <div class="ic-title">名前で呼ぶ</div>
+        <div class="ic-body">
+          利用者さんを必ず<strong>名前（さん付け）</strong>で呼ぶ。<br>
+          「あなた」「この人」などは使わない。<br>
+          笑顔で明るく声かけする。
+        </div>
+      </div>
+      <div class="important-card">
+        <div class="ic-icon">🤝</div>
+        <div class="ic-title">尊重・寄り添い</div>
+        <div class="ic-body">
+          利用者さんのペースを大切にする。<br>
+          強制・急かしはしない。<br>
+          できたことを一緒に喜ぶ。
+        </div>
+      </div>
+      <div class="important-card">
+        <div class="ic-icon">🔒</div>
+        <div class="ic-title">個人情報の保護</div>
+        <div class="ic-body">
+          利用者情報は施設外で話さない。<br>
+          書類・記録は所定の場所で管理。<br>
+          SNSへの投稿は一切禁止。
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">🔑 重要キーワード</div>
+    <div class="card">
+      <div class="card-body">
+        <span class="tag tag-warn">⚠ 安全第一</span>
+        <span class="tag tag-point">✅ ほうれんそう</span>
+        <span class="tag tag-check">🏷️ 名前で呼ぶ</span>
+        <span class="tag tag-act">🤝 尊重</span>
+        <span class="tag tag-item">🔒 個人情報保護</span>
+        <span class="tag tag-where">😊 笑顔</span>
+        <span class="tag tag-warn">⚠ 自己判断禁止</span>
+        <span class="tag tag-point">📢 報告・連絡・相談</span>
+        <span class="tag tag-check">🚫 SNS禁止</span>
+        <span class="tag tag-act">💬 声かけ</span>
+      </div>
+    </div>
+
+    <div class="point-box warn">
+      <div class="point-box-icon">⚠️</div>
+      <div class="point-box-body">
+        <div class="point-box-title">迷ったら必ずリーダーへ</div>
+        自己判断で動くことは事故やトラブルの原因になります。「これどうすれば？」と思ったら、すぐにリーダーや先輩スタッフへ確認してください。
+      </div>
+    </div>
+  </div>
+
+  <!-- 出勤・到着 -->
+  <div id="tab-arrival" class="panel">
+    <div class="point-box warn">
+      <div class="point-box-icon">⚠️</div>
+      <div class="point-box-body">
+        <div class="point-box-title">出勤時の注意事項</div>
+        体調不良（発熱・下痢・嘔吐など）の場合は、必ず出勤前にリーダーへ連絡し指示を仰いでください。施設内への入場を控える場合があります。
+      </div>
+    </div>
+
+    <div class="sec-title">🚪 出勤・入場の流れ</div>
+    <div class="card">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">1</div>
+          <div class="step-content">
+            <div class="step-title">🚪 正面玄関から入場</div>
+            <div class="step-body">施設の正面玄関から入る。裏口・非常口からの入場は禁止。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">2</div>
+          <div class="step-content">
+            <div class="step-title">🧴 手指消毒</div>
+            <div class="step-body">入口のアルコール消毒液で手指を丁寧に消毒する。両手全体にしっかり馴染ませる。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">3</div>
+          <div class="step-content">
+            <div class="step-title">🕐 タイムカード打刻</div>
+            <div class="step-body">所定のタイムカードに打刻する。忘れた場合はリーダーへ必ず申告する。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">4</div>
+          <div class="step-content">
+            <div class="step-title">👕 着替え・身だしなみ確認</div>
+            <div class="step-body">ロッカーで着替えを行う。爪は短く、アクセサリー類は外す。名札を着用する。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">5</div>
+          <div class="step-content">
+            <div class="step-title">📋 申し送り確認</div>
+            <div class="step-body">ホワイトボードや連絡ノートで本日の申し送り事項を確認する。リーダーに挨拶する。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">🌡️ 抗原検査について</div>
+    <div class="card">
+      <div class="card-title">💉 実施タイミング</div>
+      <div class="card-body">
+        週に〇回、出勤時に抗原検査を実施します。<br>
+        <span class="tag tag-check">✅ 陰性</span> → 通常通り勤務<br>
+        <span class="tag tag-warn">⚠ 陽性</span> → 即座にリーダーへ報告し、指示に従う<br><br>
+        検査キットの場所：<span class="place-badge">📍 事務所 棚の上</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 日常業務 -->
+  <div id="tab-daily" class="panel">
+    <div class="sec-title">📋 朝の業務チェックリスト</div>
+    <div class="card">
+      <ul class="checklist" id="morning-list">
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>ホワイトボードの申し送り内容を確認した</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>利用者さんへの朝の挨拶を行った</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>体調確認（顔色・様子）を一人ひとり行った</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>当日の活動内容・担当を確認した</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>必要な備品の準備をした</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>居室・作業スペースの安全確認をした</span></li>
+      </ul>
+    </div>
+
+    <div class="sec-title">📝 業務日誌の記入</div>
+    <div class="card">
+      <div class="card-title">✏️ 記入のポイント</div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">1</div>
+            <div class="step-content">
+              <div class="step-title">日付・担当者名を記入</div>
+              <div class="step-body">記入漏れがないよう最初に確認する。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">2</div>
+            <div class="step-content">
+              <div class="step-title">利用者の様子を具体的に記録</div>
+              <div class="step-body">「元気そうだった」ではなく「笑顔で挨拶ができた」など具体的に記載する。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">3</div>
+            <div class="step-content">
+              <div class="step-title">気になることは必ず記録</div>
+              <div class="step-body">小さな変化も記録に残す。判断に迷う場合はリーダーへ相談してから記載。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">4</div>
+            <div class="step-content">
+              <div class="step-title">退勤前にリーダーへ提出</div>
+              <div class="step-body">記入後は必ずリーダーに確認してもらう。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">🖊️ ホワイトボード管理</div>
+    <div class="card">
+      <div class="card-body">
+        ホワイトボードには本日の予定・連絡事項・担当者を記載します。<br><br>
+        <span class="tag tag-check">✅ 毎朝確認</span>
+        <span class="tag tag-point">📝 変更は速やかに更新</span>
+        <span class="tag tag-warn">⚠ 消す前にリーダー確認</span>
+      </div>
+    </div>
+
+    <div class="sec-title">🧹 清掃チェックリスト</div>
+    <div class="card">
+      <ul class="checklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>トイレ清掃（便器・床・手洗い場）</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>洗面台の清掃・石鹸補充確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>共用スペースの床清掃</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>ゴミ箱の確認・必要に応じて交換</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>窓・サッシの汚れ確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>清掃用具を所定の場所に戻した</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 食堂業務 -->
+  <div id="tab-shokudo" class="panel">
+    <div class="point-box info">
+      <div class="point-box-icon">🍱</div>
+      <div class="point-box-body">
+        <div class="point-box-title">食堂業務の基本</div>
+        衛生管理を徹底し、利用者さんが安全・安心に食事できる環境を整えます。アレルギー情報は必ず事前に確認してください。
+      </div>
+    </div>
+
+    <div class="sec-title">🍽️ 食事準備の流れ（9ステップ）</div>
+    <div class="card">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">1</div>
+          <div class="step-content">
+            <div class="step-title">🙌 手洗い・エプロン着用</div>
+            <div class="step-body">石鹸で30秒以上丁寧に手洗い。清潔なエプロンを着用する。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">2</div>
+          <div class="step-content">
+            <div class="step-title">📋 アレルギー確認</div>
+            <div class="step-body">その日の利用者のアレルギー情報を必ず確認する。不明な場合はリーダーへ。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">3</div>
+          <div class="step-content">
+            <div class="step-title">🧹 テーブル・椅子の消毒</div>
+            <div class="step-body">食事前にテーブルと椅子をアルコールで拭き取る。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">4</div>
+          <div class="step-content">
+            <div class="step-title">🥄 食器・カトラリーのセット</div>
+            <div class="step-body">利用者ごとの食器を確認しセットする。欠けや汚れがないか確認する。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">5</div>
+          <div class="step-content">
+            <div class="step-title">🍵 お茶・水の準備</div>
+            <div class="step-body">人数分のお茶・水を準備する。温度に注意（熱すぎないか確認）。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">6</div>
+          <div class="step-content">
+            <div class="step-title">🪑 席への誘導</div>
+            <div class="step-body">「○○さん、食事の準備ができました」と名前で声かけして誘導する。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">7</div>
+          <div class="step-content">
+            <div class="step-title">🍱 配膳</div>
+            <div class="step-body">温かいものは温かく、冷たいものは冷たく。利用者の前に丁寧に置く。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">8</div>
+          <div class="step-content">
+            <div class="step-title">👀 食事中の見守り</div>
+            <div class="step-body">むせ・誤嚥に注意して見守る。困っている様子があれば声をかける。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--amber-lt);color:var(--amber);">9</div>
+          <div class="step-content">
+            <div class="step-title">🧽 後片付け・消毒</div>
+            <div class="step-body">食器を下げ、テーブル・椅子を消毒する。食器は所定の方法で洗浄・乾燥する。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">☕ お茶配りの流れ（7ステップ）</div>
+    <div class="card">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">1</div>
+          <div class="step-content"><div class="step-title">手洗い・トレーの準備</div><div class="step-body">清潔なトレーにコップをセットする。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">2</div>
+          <div class="step-content"><div class="step-title">お茶の温度確認</div><div class="step-body">熱すぎないか（60℃以下目安）確認する。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">3</div>
+          <div class="step-content"><div class="step-title">人数分を注ぐ</div><div class="step-body">こぼれないよう8分目を目安に注ぐ。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">4</div>
+          <div class="step-content"><div class="step-title">名前で声かけしながら配る</div><div class="step-body">「○○さん、お茶どうぞ」と笑顔で手渡す。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">5</div>
+          <div class="step-content"><div class="step-title">飲めているか確認</div><div class="step-body">自分で飲めているか様子を見る。必要なら介助する。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">6</div>
+          <div class="step-content"><div class="step-title">お代わりの確認</div><div class="step-body">「お代わりはいかがですか？」と声をかける。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">7</div>
+          <div class="step-content"><div class="step-title">コップを下げて洗浄</div><div class="step-body">使用済みコップを回収し、所定の方法で洗浄・乾燥する。</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="point-box warn">
+      <div class="point-box-icon">⚠️</div>
+      <div class="point-box-body">
+        <div class="point-box-title">誤嚥・むせに注意</div>
+        食事・お茶提供中に利用者さんがむせた場合は、すぐに背中をさすり落ち着かせる。改善しない場合は即座にリーダーへ報告してください。
+      </div>
+    </div>
+  </div>
+
+  <!-- 施設管理 -->
+  <div id="tab-facility" class="panel">
+    <div class="sec-title">🔒 戸締り確認チェックリスト</div>
+    <div class="card">
+      <div class="place-badge">📍 1階</div>
+      <ul class="checklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>正面玄関の施錠確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>裏口・非常口の施錠確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>食堂の窓・ドアの施錠確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>トイレの電気を消した</span></li>
+      </ul>
+      <br>
+      <div class="place-badge">📍 2階</div>
+      <ul class="checklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>各部屋の窓・ドアの施錠確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>電気・エアコンの消灯確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>洗面所の水道が閉まっているか確認</span></li>
+      </ul>
+    </div>
+
+    <div class="point-box warn">
+      <div class="point-box-icon">⚠️</div>
+      <div class="point-box-body">
+        <div class="point-box-title">飛び出し防止・ドア開閉ルール</div>
+        利用者さんが一人で外へ出ないよう、ドアの開閉には細心の注意を払う。外出時は必ずリーダーへ報告し、二重確認を徹底する。
+      </div>
+    </div>
+
+    <div class="sec-title">👕 洗濯業務の流れ</div>
+    <div class="card">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">1</div>
+          <div class="step-content"><div class="step-title">洗濯物の仕分け</div><div class="step-body">利用者ごとに名前を確認しながら仕分ける。混在しないよう注意する。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">2</div>
+          <div class="step-content"><div class="step-title">洗濯機へ投入・洗剤確認</div><div class="step-body">洗剤の量を確認し、適切なコースで洗濯開始。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">3</div>
+          <div class="step-content"><div class="step-title">乾燥・干す</div><div class="step-body">乾燥機または所定の場所に干す。利用者名タグを確認する。</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--blue-lt);color:var(--blue);">4</div>
+          <div class="step-content"><div class="step-title">たたみ・収納</div><div class="step-body">乾いたら丁寧にたたみ、利用者ごとに仕分けして所定の場所に収納する。</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">🚗 送迎業務の注意点</div>
+    <div class="card">
+      <div class="card-body">
+        <span class="tag tag-warn">⚠ シートベルト確認必須</span>
+        <span class="tag tag-check">✅ 乗降時はゆっくり</span>
+        <span class="tag tag-point">📋 名簿で人数確認</span>
+        <span class="tag tag-warn">⚠ 車内に一人にしない</span><br><br>
+        乗降時は利用者さんの手を取り、安全に乗り降りできるよう介助する。<br>
+        出発前・到着後に必ず人数を確認する。
+      </div>
+    </div>
+  </div>
+
+  <!-- 作業活動 -->
+  <div id="tab-activities" class="panel">
+    <div class="sec-title">🎨 作業活動の種類と手順</div>
+
+    <div class="act-card">
+      <div class="act-header">
+        <div class="act-header-icon" style="background:var(--purple-lt);">🏷️</div>
+        <div class="act-header-title">シール貼り作業</div>
+      </div>
+      <div class="act-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--purple-lt);color:var(--purple);">1</div>
+            <div class="step-content"><div class="step-title">作業台・材料の準備</div><div class="step-body">清潔な作業台にシール・貼付対象物を準備する。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purple-lt);color:var(--purple);">2</div>
+            <div class="step-content"><div class="step-title">作業説明・デモンストレーション</div><div class="step-body">実際にやって見せながら説明する。焦らずゆっくり伝える。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purple-lt);color:var(--purple);">3</div>
+            <div class="step-content"><div class="step-title">見守り・サポート</div><div class="step-body">利用者のペースで進める。困っていたらさりげなく手伝う。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purple-lt);color:var(--purple);">4</div>
+            <div class="step-content"><div class="step-title">品質確認・数量カウント</div><div class="step-body">ズレや貼り忘れがないか確認する。完成品を丁寧に数える。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purple-lt);color:var(--purple);">5</div>
+            <div class="step-content"><div class="step-title">「よくできました！」と声かけ</div><div class="step-body">完成を一緒に喜ぶ。具体的に褒める。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="act-card">
+      <div class="act-header">
+        <div class="act-header-icon" style="background:var(--green-lt);">📦</div>
+        <div class="act-header-title">緩衝材詰め作業</div>
+      </div>
+      <div class="act-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--green-lt);color:var(--green);">1</div>
+            <div class="step-content"><div class="step-title">材料・箱の準備</div><div class="step-body">緩衝材・梱包箱・テープを作業台に揃える。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--green-lt);color:var(--green);">2</div>
+            <div class="step-content"><div class="step-title">詰め方の説明</div><div class="step-body">見本を見せながら「こうやって入れます」と丁寧に説明する。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--green-lt);color:var(--green);">3</div>
+            <div class="step-content"><div class="step-title">作業の見守り</div><div class="step-body">利用者のペースに合わせて見守る。詰め方が均等か確認する。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--green-lt);color:var(--green);">4</div>
+            <div class="step-content"><div class="step-title">完成品の確認・積み上げ</div><div class="step-body">完成した箱は所定の場所に丁寧に積み上げる。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="act-card">
+      <div class="act-header">
+        <div class="act-header-icon" style="background:var(--teal-lt);">🧺</div>
+        <div class="act-header-title">タオルたたみ作業</div>
+      </div>
+      <div class="act-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">1</div>
+            <div class="step-content"><div class="step-title">乾いたタオルの確認</div><div class="step-body">湿っていないか確認する。湿っているものは乾燥に戻す。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">2</div>
+            <div class="step-content"><div class="step-title">たたみ方の説明・実演</div><div class="step-body">三つ折り・四つ折りなど決められたたたみ方を実演する。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">3</div>
+            <div class="step-content"><div class="step-title">一緒にたたむ</div><div class="step-body">最初は一緒に行い、できるようになったら見守りに切り替える。</div></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--teal-lt);color:var(--teal);">4</div>
+            <div class="step-content"><div class="step-title">収納場所へ片付け</div><div class="step-body">決められた場所に種類ごとに整理して収納する。</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 備品管理 -->
+  <div id="tab-supplies" class="panel">
+    <div class="sec-title">📦 備品の保管場所一覧</div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">🧴 衛生用品</div>
+        <div class="card-body">
+          <div class="place-badge">📍 1階 洗面台下</div>
+          アルコール消毒液、手袋、マスク、体温計、抗原検査キット
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🧹 清掃用品</div>
+        <div class="card-body">
+          <div class="place-badge">📍 1階 清掃庫</div>
+          モップ、バケツ、雑巾、トイレブラシ、洗剤類
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🍽️ 食堂用品</div>
+        <div class="card-body">
+          <div class="place-badge">📍 食堂 棚</div>
+          食器、カトラリー、エプロン、トレー、ラップ
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">👕 洗濯用品</div>
+        <div class="card-body">
+          <div class="place-badge">📍 2階 洗濯室</div>
+          洗剤、柔軟剤、ネット、ハンガー、洗濯バサミ
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖊️ 事務用品</div>
+        <div class="card-body">
+          <div class="place-badge">📍 事務所 引き出し</div>
+          業務日誌、ボールペン、印鑑、ファイル類
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎨 作業用品</div>
+        <div class="card-body">
+          <div class="place-badge">📍 作業室 棚</div>
+          シール類、緩衝材、梱包箱、テープ、カウンター
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">🔧 備品のメンテナンス</div>
+    <div class="card">
+      <ul class="checklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>消毒液の残量確認（少なくなったらリーダーへ報告）</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>マスク・手袋の在庫確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>清掃用品の破損・劣化確認</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>洗濯機・乾燥機のフィルター清掃</span></li>
+        <li><span class="chk" onclick="toggleChk(this)"></span><span>備品の使用後は必ず所定の場所に戻す</span></li>
+      </ul>
+    </div>
+
+    <div class="point-box amber">
+      <div class="point-box-icon">📢</div>
+      <div class="point-box-body">
+        <div class="point-box-title">備品がなくなりそうな時は</div>
+        在庫が少なくなったら自分で判断せず、必ずリーダーへ報告してください。発注・補充はリーダーが行います。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  支援員補助マニュアル ／ 不明点はリーダーへご確認ください ／ 無断転載禁止
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+  function toggleChk(el) {
+    el.classList.toggle('checked');
+  }
+</script>
+</body>
+</html>
