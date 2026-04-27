@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/user/Downloads/haisetsu-check_8.html -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>排泄チェックシート</title>
+  <style>
+    :root {
+      --bg: #f5efe4;
+      --panel: rgba(255, 252, 246, 0.96);
+      --panel-soft: #f4ebdc;
+      --line: #d6c5aa;
+      --text: #2e2418;
+      --muted: #6d614f;
+      --brand: #0f766e;
+      --brand-strong: #0b5d57;
+      --accent-0: #f4efe6;
+      --accent-1: #cfe7ff;
+      --accent-2: #ffd8a4;
+      --accent-3: #d9ccff;
+      --danger: #a13d2f;
+      --shadow: 0 22px 42px rgba(75, 54, 25, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(217, 119, 6, 0.14), transparent 26%),
+        linear-gradient(180deg, #f8f4ec 0%, #efe4d3 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: linear-gradient(140deg, rgba(15, 118, 110, 0.96), rgba(11, 93, 87, 0.92));
+      color: #fff;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.08;
+      letter-spacing: 0.04em;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      max-width: 54rem;
+      color: rgba(255, 255, 255, 0.86);
+      line-height: 1.7;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #bce8d4;
+      box-shadow: 0 0 0 6px rgba(188, 232, 212, 0.15);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 390px minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(214, 197, 170, 0.7);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-head {
+      padding: 20px 22px 10px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .panel-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .panel-body {
+      padding: 20px 22px 22px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      padding: 12px 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .preset-row,
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--brand-strong); }
+
+    .btn-subtle {
+      background: #ece2d2;
+      color: var(--text);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-teams {
+      background: #5558af;
+      color: #fff;
+    }
+    .btn-teams:hover { background: #444899; }
+
+    .legend-list,
+    .summary-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .legend-item,
+    .summary-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--panel-soft);
+      border: 1px solid rgba(214, 197, 170, 0.65);
+      border-radius: 16px;
+    }
+
+    .badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #000;
+    }
+
+    .state-0 { background: var(--accent-0); color: var(--muted); }
+    .state-1 { background: var(--accent-1); }
+    .state-2 { background: var(--accent-2); }
+    .state-3 { background: var(--accent-3); }
+
+    .subnote {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .meta-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 22px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-shell {
+      padding: 20px 22px 22px;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1040px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #f0e4d1;
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    th, td {
+      border-right: 1px solid #ddcfbb;
+      border-bottom: 1px solid #ddcfbb;
+      padding: 0;
+      text-align: center;
+    }
+
+    th:first-child,
+    td:first-child {
+      border-left: 1px solid #ddcfbb;
+    }
+
+    thead tr:first-child th {
+      border-top: 1px solid #ddcfbb;
+    }
+
+    th {
+      padding: 14px 10px;
+      font-weight: 800;
+    }
+
+    .col-name { width: 180px; }
+    .col-time { width: 98px; }
+    .col-note { width: 220px; }
+
+    .name-input,
+    .note-input {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      min-height: 60px;
+      height: 100%;
+    }
+
+    .state-btn {
+      width: 100%;
+      min-height: 60px;
+      border-radius: 0;
+      padding: 0;
+      font-size: 24px;
+      background: var(--accent-0);
+      color: transparent;
+    }
+
+    .state-btn.state-1 { background: var(--accent-1); color: #000; }
+    .state-btn.state-2 { background: var(--accent-2); color: #000; }
+    .state-btn.state-3 { background: var(--accent-3); color: #000; }
+
+    .summary-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 18px;
+    }
+
+    .summary-item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1120px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell { padding: 14px; }
+      .hero { padding: 22px; border-radius: 22px; }
+      .panel { border-radius: 20px; }
+      .two-cols { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell { max-width: none; padding: 0; }
+      .hero,
+      .panel:first-child,
+      .actions,
+      .preset-row,
+      .meta-strip { display: none !important; }
+      .layout { display: block; }
+      .panel {
+        box-shadow: none;
+        border: none;
+        background: #fff;
+      }
+      .table-shell {
+        padding: 0;
+        overflow: visible;
+      }
+      thead th {
+        position: static;
+        background: #ececec !important;
+      }
+      .state-btn {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      /* PDF保存用ヘッダーを印刷時のみ表示 */
+      .print-header {
+        display: block !important;
+        padding: 12px 16px 8px;
+        border-bottom: 2px solid #ccc;
+        margin-bottom: 8px;
+      }
+      .print-header h2 {
+        margin: 0 0 4px;
+        font-size: 18px;
+      }
+      .print-header p {
+        margin: 0;
+        font-size: 12px;
+        color: #555;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-row">
+        <div>
+          <h1 id="hero-title" contenteditable="true" style="outline:none;cursor:text;" title="クリックして編集">排泄チェックシート</h1>
+          <p>まずは現場の書き方に合わせて項目を固めるための試作版です。勤務帯、時間帯、凡例、備考欄名を画面上で調整しながら、運用の形を確認できます。</p>
+        </div>
+        <div class="status">
+          <span class="status-dot"></span>
+          <span id="save-status">この端末に自動保存しています</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <h2>現場向け設定</h2>
+          <p>まずは今の運用に寄せて文言を調整し、あとから共有機能をのせやすい形にしています。</p>
+        </div>
+        <div class="panel-body">
+          <div class="stack">
+            <div class="two-cols">
+              <label>
+                記録日
+                <input id="record-date" type="date">
+              </label>
+              <label>
+                勤務帯
+                <select id="shift-name">
+                  <option value="日中">日中</option>
+                  <option value="早番">早番</option>
+                  <option value="遅番">遅番</option>
+                  <option value="夜勤">夜勤</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="two-cols">
+              <label>
+                記録者
+                <input id="staff-name" type="text" placeholder="例: 田中">
+              </label>
+              <label>
+                部署・ユニット
+                <input id="unit-name" type="text" placeholder="例: 2階ユニット">
+              </label>
+            </div>
+
+            <div class="two-cols">
+              <label>
+                シート名
+                <input id="sheet-name" type="text" placeholder="例: 排泄チェックシート">
+              </label>
+              <label>
+                行数
+                <select id="row-count">
+                  <option value="5">5名</option>
+                  <option value="6">6名</option>
+                  <option value="8">8名</option>
+                  <option value="10">10名</option>
+                  <option value="12">12名</option>
+                  <option value="15">15名</option>
+                  <option value="20">20名</option>
+                  <option value="25">25名</option>
+                  <option value="30">30名</option>
+                  <option value="35">35名</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="two-cols">
+              <label>
+                利用者列名
+                <input id="resident-label" type="text" placeholder="例: 利用者名">
+              </label>
+              <label>
+                備考列名
+                <input id="note-label" type="text" placeholder="例: 備考">
+              </label>
+            </div>
+
+            <label>
+              時間帯
+              <input id="time-slots" type="text" placeholder="例: 9:00,10:00,11:00,12:00,13:00,14:00,15:00">
+            </label>
+
+            <div class="preset-row">
+              <button class="btn-subtle" id="preset-day" type="button">日中テンプレート</button>
+              <button class="btn-subtle" id="preset-night" type="button">夜間テンプレート</button>
+              <button class="btn-subtle" id="preset-short" type="button">巡回テンプレート</button>
+            </div>
+
+            <label>
+              引き継ぎメモ
+              <textarea id="handover-note" placeholder="申し送りや注意点を入力"></textarea>
+            </label>
+
+            <div>
+              <label style="margin-bottom:8px;">凡例</label>
+              <div class="legend-list">
+                <div class="legend-item">
+                  <div class="badge state-1">1</div>
+                  <input id="legend-1" type="text" placeholder="例: 排尿">
+                </div>
+                <div class="legend-item">
+                  <div class="badge state-2">2</div>
+                  <input id="legend-2" type="text" placeholder="例: 排便">
+                </div>
+                <div class="legend-item">
+                  <div class="badge state-3">3</div>
+                  <input id="legend-3" type="text" placeholder="例: 両方">
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label style="margin-bottom:8px;">当日の集計</label>
+              <div class="summary-list">
+                <div class="summary-item">
+                  <div class="badge state-1">1</div>
+                  <div>
+                    <strong id="count-state-1">0件</strong>
+                    <span id="summary-label-1">排尿</span>
+                  </div>
+                </div>
+                <div class="summary-item">
+                  <div class="badge state-2">2</div>
+                  <div>
+                    <strong id="count-state-2">0件</strong>
+                    <span id="summary-label-2">排便</span>
+                  </div>
+                </div>
+                <div class="summary-item">
+                  <div class="badge state-3">3</div>
+                  <div>
+                    <strong id="count-state-3">0件</strong>
+                    <span id="summary-label-3">両方</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn-primary" id="print-button" type="button">🖨️ 印刷</button>
+              <button class="btn-primary" id="pdf-button" type="button">📄 PDFで保存</button>
+              <button class="btn-teams" id="teams-button" type="button">💬 Teamsにコピー</button>
+              <button class="btn-subtle" id="export-button" type="button">JSONを書き出し</button>
+              <button class="btn-subtle" id="import-button" type="button">JSONを読み込む</button>
+              <button class="btn-danger" id="reset-button" type="button">この日の記録を初期化</button>
+            </div>
+
+            <div id="teams-toast" style="display:none; margin-top:10px; padding:10px 14px; background:#e8f5e9; border:1px solid #a5d6a7; border-radius:12px; font-size:13px; color:#2e7d32;">
+              ✅ クリップボードにコピーしました！Teamsを開いて貼り付けてください（Ctrl+V / ⌘+V）
+            </div>
+
+            <div class="subnote">
+              今回は運用調整に集中するため、保存先はブラウザ内にしています。項目が固まったら、この保存部分を Firebase や社内サーバーへ差し替える流れが一番きれいです。
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel">
+        <div class="print-header" style="display:none;">
+          <h2 id="print-sheet-name">排泄チェックシート</h2>
+          <p id="print-sheet-meta">記録日: 2026-04-28 / 部署: -- / 記録者: -- / 勤務帯: 日中</p>
+        </div>
+        <div class="panel-head">
+          <h2 id="sheet-heading">排泄チェックシート</h2>
+          <p>セルを押すたびに「空欄 → 1 → 2 → 3」と切り替わります。氏名と備考は直接入力できます。</p>
+        </div>
+        <div class="meta-strip">
+          <div id="sheet-title">記録日: 2026-04-28</div>
+          <div id="sheet-subtitle">部署: -- / 記録者: -- / 勤務帯: 日中</div>
+        </div>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr id="table-head-row"><th class="col-name">利用者名</th><th class="col-time">9:00</th><th class="col-time">10:00</th><th class="col-time">11:00</th><th class="col-time">12:00</th><th class="col-time">13:00</th><th class="col-time">14:00</th><th class="col-time">15:00</th><th class="col-note">備考</th></tr>
+            </thead>
+            <tbody id="sheet-body"><tr><td><input class="name-input" type="text" placeholder="利用者名1"></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><input class="note-input" type="text" placeholder="備考"></td></tr><tr><td><input class="name-input" type="text" placeholder="利用者名2"></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><input class="note-input" type="text" placeholder="備考"></td></tr><tr><td><input class="name-input" type="text" placeholder="利用者名3"></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><input class="note-input" type="text" placeholder="備考"></td></tr><tr><td><input class="name-input" type="text" placeholder="利用者名4"></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><input class="note-input" type="text" placeholder="備考"></td></tr><tr><td><input class="name-input" type="text" placeholder="利用者名5"></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><button type="button" data-state="0" class="state-btn state-0" aria-label="未入力"></button></td><td><input class="note-input" type="text" placeholder="備考"></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <input id="import-file" type="file" accept="application/json" hidden="">
+
+  <script>
+    const STORAGE_PREFIX = "bowel-checksheet";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzuFLv-dZ32igzhGWVX5KduBHChR5d5A4kIsw7ISt1lBmu7qs_BI7k-K50GDV_yc4WC/exec";
+    const DEFAULT_TIME_SLOTS = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"];
+    const DEFAULT_ROWS = 5;
+
+    const defaultMeta = (dateText) => ({
+      recordDate: dateText,
+      shiftName: "日中",
+      staffName: "",
+      unitName: "",
+      sheetName: "排泄チェックシート",
+      residentLabel: "利用者名",
+      noteLabel: "備考",
+      handoverNote: "",
+      legend1: "排尿",
+      legend2: "排便",
+      legend3: "両方",
+      rowCount: DEFAULT_ROWS,
+      timeSlots: [...DEFAULT_TIME_SLOTS]
+    });
+
+    const state = {
+      meta: defaultMeta(""),
+      rows: []
+    };
+
+    const els = {
+      recordDate: document.getElementById("record-date"),
+      shiftName: document.getElementById("shift-name"),
+      staffName: document.getElementById("staff-name"),
+      unitName: document.getElementById("unit-name"),
+      sheetName: document.getElementById("sheet-name"),
+      residentLabel: document.getElementById("resident-label"),
+      noteLabel: document.getElementById("note-label"),
+      timeSlots: document.getElementById("time-slots"),
+      handoverNote: document.getElementById("handover-note"),
+      legend1: document.getElementById("legend-1"),
+      legend2: document.getElementById("legend-2"),
+      legend3: document.getElementById("legend-3"),
+      rowCount: document.getElementById("row-count"),
+      sheetHeading: document.getElementById("sheet-heading"),
+      sheetBody: document.getElementById("sheet-body"),
+      tableHeadRow: document.getElementById("table-head-row"),
+      saveStatus: document.getElementById("save-status"),
+      sheetTitle: document.getElementById("sheet-title"),
+      sheetSubtitle: document.getElementById("sheet-subtitle"),
+      countState1: document.getElementById("count-state-1"),
+      countState2: document.getElementById("count-state-2"),
+      countState3: document.getElementById("count-state-3"),
+      summaryLabel1: document.getElementById("summary-label-1"),
+      summaryLabel2: document.getElementById("summary-label-2"),
+      summaryLabel3: document.getElementById("summary-label-3"),
+      presetDay: document.getElementById("preset-day"),
+      presetNight: document.getElementById("preset-night"),
+      presetShort: document.getElementById("preset-short"),
+      printButton: document.getElementById("print-button"),
+      pdfButton: document.getElementById("pdf-button"),
+      teamsButton: document.getElementById("teams-button"),
+      teamsToast: document.getElementById("teams-toast"),
+      exportButton: document.getElementById("export-button"),
+      importButton: document.getElementById("import-button"),
+      importFile: document.getElementById("import-file"),
+      resetButton: document.getElementById("reset-button")
+    };
+
+    function todayString() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function recordStorageKey(dateText) {
+      return `${STORAGE_PREFIX}:${dateText}`;
+    }
+
+    function normalizeTimeSlots(value) {
+      const tokens = Array.isArray(value)
+        ? value
+        : String(value || "")
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean);
+
+      return tokens.length > 0 ? tokens : [...DEFAULT_TIME_SLOTS];
+    }
+
+    function blankRow(index) {
+      return {
+        name: "",
+        note: "",
+        cells: state.meta.timeSlots.map(() => 0),
+        order: index + 1
+      };
+    }
+
+    function ensureRows(rowCount) {
+      const count = Number(rowCount) || DEFAULT_ROWS;
+      while (state.rows.length < count) {
+        state.rows.push(blankRow(state.rows.length));
+      }
+      state.rows = state.rows.slice(0, count);
+      state.meta.rowCount = count;
+    }
+
+    function ensureCellsForTimes() {
+      const slotCount = state.meta.timeSlots.length;
+      state.rows = state.rows.map((row, index) => {
+        const cells = Array.isArray(row.cells) ? [...row.cells] : [];
+        while (cells.length < slotCount) cells.push(0);
+        return {
+          name: row?.name || "",
+          note: row?.note || "",
+          order: index + 1,
+          cells: cells.slice(0, slotCount).map((value) => Number(value) || 0)
+        };
+      });
+    }
+
+    function updateSaveStatus(message) {
+      els.saveStatus.textContent = message;
+    }
+
+    function saveState() {
+      if (!state.meta.recordDate) return;
+      // ローカルにも保存
+      localStorage.setItem(recordStorageKey(state.meta.recordDate), JSON.stringify(state));
+      updateSaveStatus(`自動保存済み: ${new Date().toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })}`);
+      // GAS設定保存はsaveMeta()で明示的に行う
+    }
+
+    // 設定（利用者名・時間帯）をGASに保存
+    async function saveMeta() {
+      try {
+        const metaStr = encodeURIComponent(JSON.stringify({
+          rows: state.rows.map(r => r.name || ''),
+          timeSlots: state.meta.timeSlots || [],
+          rowCount: state.meta.rowCount || 5,
+          shiftName: state.meta.shiftName || ''
+        }));
+        const params = new URLSearchParams({
+          action: 'saveMeta',
+          date: state.meta.recordDate || '',
+          kinmu: state.meta.shiftName || '',
+          meta: metaStr
+        });
+        const img = new Image();
+        img.src = GAS_URL + '?' + params.toString();
+        console.log('設定をGASに保存しました');
+      } catch(e) {
+        console.log('設定保存エラー:', e);
+      }
+    }
+
+    // GASから設定を読み込む
+    async function loadMetaFromGAS(dateText, kinmu) {
+      try {
+        const params = new URLSearchParams({
+          action: 'loadMeta',
+          date: dateText,
+          kinmu: kinmu
+        });
+        const res = await fetch(GAS_URL + '?' + params.toString());
+        const json = await res.json();
+        if (json.status === 'success' && json.meta) {
+          const m = json.meta;
+          if (m.rows && m.rows.length > 0) {
+            // 利用者名を反映
+            m.rows.forEach((name, i) => {
+              if (state.rows[i]) state.rows[i].name = name;
+            });
+          }
+          if (m.timeSlots && m.timeSlots.length > 0) {
+            state.meta.timeSlots = m.timeSlots;
+          }
+          if (m.rowCount) state.meta.rowCount = m.rowCount;
+          if (m.shiftName) state.meta.shiftName = m.shiftName;
+          renderAll();
+          console.log('GASから設定を読み込みました✅');
+          updateSaveStatus('設定を共有データから読み込みました');
+        }
+      } catch(e) {
+        console.log('GAS設定読み込みエラー（ローカルデータを使用）:', e);
+      }
+    }
+
+    async function sendSingleCell(rowIndex, cellIndex, value) {
+      try {
+        const name = state.rows[rowIndex].name || '';
+        if (!name) { console.log('名前未入力のため送信スキップ'); return; }
+        const timeSlots = state.meta.timeSlots || [];
+        const time = timeSlots[cellIndex] || String(cellIndex);
+        const stateText = value === 1 ? '排尿' : value === 2 ? '排便' : '両方';
+        const date = state.meta.recordDate || '';
+        const kinmu = state.meta.kinmu || '';
+        const recorder = state.meta.recorder || '';
+        const note = state.rows[rowIndex].note || '';
+
+        const params = new URLSearchParams({
+          action: 'save',
+          date, kinmu, recorder, name, time, stateText, note
+        });
+        const img = new Image();
+        img.src = GAS_URL + '?' + params.toString();
+        console.log('送信:', name, time, stateText);
+      } catch(e) {
+        console.log('送信エラー:', e);
+      }
+    }
+
+    async function syncToGAS() {
+      try {
+        const date = state.meta.recordDate || '';
+        const kinmu = state.meta.kinmu || '';
+        const recorder = state.meta.recorder || '';
+        const timeSlots = state.meta.timeSlots || [];
+
+        const rows = [];
+        state.rows.forEach(function(row) {
+          const name = row.name || '';
+          if (!name) return;
+          const cells = row.cells || [];
+          // cellsが配列の場合
+          if (Array.isArray(cells)) {
+            cells.forEach(function(cellVal, idx) {
+              if (cellVal && cellVal > 0) {
+                rows.push({
+                  name: name,
+                  time: timeSlots[idx] || String(idx),
+                  state: cellVal,
+                  note: '',
+                  recorder: recorder
+                });
+              }
+            });
+          } else {
+            // cellsがオブジェクトの場合
+            Object.keys(cells).forEach(function(t) {
+              const cell = cells[t];
+              if (cell && cell.state > 0) {
+                rows.push({
+                  name: name,
+                  time: t,
+                  state: cell.state,
+                  note: cell.note || '',
+                  recorder: recorder
+                });
+              }
+            });
+          }
+        });
+
+        if (rows.length === 0) {
+          console.log('送信データなし');
+          return;
+        }
+
+        console.log('送信データ:', rows.length, '件');
+
+        for (const row of rows) {
+          const stateText = row.state === 1 ? '排尿' : row.state === 2 ? '排便' : '両方';
+          const params = new URLSearchParams({
+            action: 'save',
+            date: date,
+            kinmu: kinmu,
+            recorder: recorder,
+            name: row.name,
+            time: row.time,
+            stateText: stateText,
+            note: row.note || ''
+          });
+          const url = GAS_URL + '?' + params.toString();
+          const img = new Image();
+          img.src = url;
+          console.log('送信URL:', url);
+        }
+      } catch(e) {
+        console.log('GAS同期エラー:', e);
+      }
+    }
+
+    function loadStateByDate(dateText) {
+      const raw = localStorage.getItem(recordStorageKey(dateText));
+      if (!raw) {
+        state.meta = defaultMeta(dateText);
+        state.rows = [];
+        ensureRows(DEFAULT_ROWS);
+        ensureCellsForTimes();
+        renderAll();
+        saveState();
+        return;
+      }
+
+      const parsed = JSON.parse(raw);
+      const fallbackMeta = defaultMeta(dateText);
+      state.meta = {
+        ...fallbackMeta,
+        ...parsed.meta,
+        recordDate: parsed.meta?.recordDate || dateText,
+        rowCount: Number(parsed.meta?.rowCount) || DEFAULT_ROWS,
+        timeSlots: normalizeTimeSlots(parsed.meta?.timeSlots)
+      };
+      state.rows = Array.isArray(parsed.rows) ? parsed.rows : [];
+      ensureRows(state.meta.rowCount);
+      ensureCellsForTimes();
+      renderAll();
+    }
+
+    function renderHead() {
+      els.tableHeadRow.innerHTML = "";
+
+      const nameHead = document.createElement("th");
+      nameHead.className = "col-name";
+      nameHead.textContent = state.meta.residentLabel || "利用者名";
+      els.tableHeadRow.appendChild(nameHead);
+
+      state.meta.timeSlots.forEach((slot) => {
+        const th = document.createElement("th");
+        th.className = "col-time";
+        th.textContent = slot;
+        els.tableHeadRow.appendChild(th);
+      });
+
+      const noteHead = document.createElement("th");
+      noteHead.className = "col-note";
+      noteHead.textContent = state.meta.noteLabel || "備考";
+      els.tableHeadRow.appendChild(noteHead);
+    }
+
+    function setButtonState(button, value) {
+      button.dataset.state = String(value);
+      button.className = `state-btn state-${value}`;
+      button.textContent = value === 0 ? "" : String(value);
+      button.setAttribute("aria-label", value === 0 ? "未入力" : `状態 ${value}`);
+    }
+
+    function renderBody() {
+      els.sheetBody.innerHTML = "";
+
+      state.rows.forEach((row, rowIndex) => {
+        const tr = document.createElement("tr");
+
+        const nameTd = document.createElement("td");
+        const nameInput = document.createElement("input");
+        nameInput.className = "name-input";
+        nameInput.type = "text";
+        nameInput.placeholder = `${state.meta.residentLabel || "利用者名"}${rowIndex + 1}`;
+        nameInput.value = row.name;
+        nameInput.addEventListener("input", (event) => {
+          state.rows[rowIndex].name = event.target.value;
+          saveState();
+          // 利用者名変更時はGASにも設定を保存
+          clearTimeout(nameInput._saveTimer);
+          nameInput._saveTimer = setTimeout(saveMeta, 2000);
+        });
+        nameTd.appendChild(nameInput);
+        tr.appendChild(nameTd);
+
+        row.cells.forEach((cell, cellIndex) => {
+          const td = document.createElement("td");
+          const button = document.createElement("button");
+          button.type = "button";
+          setButtonState(button, cell);
+          button.addEventListener("click", () => {
+            const nextValue = (state.rows[rowIndex].cells[cellIndex] + 1) % 4;
+            state.rows[rowIndex].cells[cellIndex] = nextValue;
+            setButtonState(button, nextValue);
+            renderSummary();
+            saveState();
+            // 該当セルのみGASに送信
+            if (nextValue > 0) {
+              sendSingleCell(rowIndex, cellIndex, nextValue);
+            }
+          });
+          td.appendChild(button);
+          tr.appendChild(td);
+        });
+
+        const noteTd = document.createElement("td");
+        const noteInput = document.createElement("input");
+        noteInput.className = "note-input";
+        noteInput.type = "text";
+        noteInput.placeholder = state.meta.noteLabel || "備考";
+        noteInput.value = row.note;
+        noteInput.addEventListener("input", (event) => {
+          state.rows[rowIndex].note = event.target.value;
+          saveState();
+        });
+        noteTd.appendChild(noteInput);
+        tr.appendChild(noteTd);
+
+        els.sheetBody.appendChild(tr);
+      });
+    }
+
+    function renderMeta() {
+      els.recordDate.value = state.meta.recordDate;
+      els.shiftName.value = state.meta.shiftName;
+      els.staffName.value = state.meta.staffName;
+      els.unitName.value = state.meta.unitName;
+      els.sheetName.value = state.meta.sheetName;
+      els.residentLabel.value = state.meta.residentLabel;
+      els.noteLabel.value = state.meta.noteLabel;
+      els.timeSlots.value = state.meta.timeSlots.join(",");
+      els.handoverNote.value = state.meta.handoverNote;
+      els.legend1.value = state.meta.legend1;
+      els.legend2.value = state.meta.legend2;
+      els.legend3.value = state.meta.legend3;
+      els.rowCount.value = String(state.meta.rowCount);
+
+      els.sheetHeading.textContent = state.meta.sheetName || "排泄チェックシート";
+      els.sheetTitle.textContent = `記録日: ${state.meta.recordDate || "--"}`;
+      els.sheetSubtitle.textContent = `部署: ${state.meta.unitName || "--"} / 記録者: ${state.meta.staffName || "--"} / 勤務帯: ${state.meta.shiftName || "--"}`;
+
+      const printName = document.getElementById("print-sheet-name");
+      const printMeta = document.getElementById("print-sheet-meta");
+      if (printName) printName.textContent = state.meta.sheetName || "チェックシート";
+      if (printMeta) printMeta.textContent = `記録日: ${state.meta.recordDate || "--"} / 部署: ${state.meta.unitName || "--"} / 記録者: ${state.meta.staffName || "--"} / 勤務帯: ${state.meta.shiftName || "--"}`;
+
+      const heroTitle = document.getElementById("hero-title");
+      if (heroTitle && document.activeElement !== heroTitle) {
+        heroTitle.textContent = state.meta.sheetName || "排泄チェックシート";
+      }
+    }
+
+    function renderSummary() {
+      let count1 = 0;
+      let count2 = 0;
+      let count3 = 0;
+
+      state.rows.forEach((row) => {
+        row.cells.forEach((cell) => {
+          if (cell === 1) count1 += 1;
+          if (cell === 2) count2 += 1;
+          if (cell === 3) count3 += 1;
+        });
+      });
+
+      els.countState1.textContent = `${count1}件`;
+      els.countState2.textContent = `${count2}件`;
+      els.countState3.textContent = `${count3}件`;
+      els.summaryLabel1.textContent = state.meta.legend1 || "凡例1の件数";
+      els.summaryLabel2.textContent = state.meta.legend2 || "凡例2の件数";
+      els.summaryLabel3.textContent = state.meta.legend3 || "凡例3の件数";
+    }
+
+    function renderAll() {
+      renderMeta();
+      renderHead();
+      renderBody();
+      renderSummary();
+    }
+
+    function syncMetaField(field, value) {
+      state.meta[field] = value;
+      renderMeta();
+      renderSummary();
+      saveState();
+    }
+
+    function updateTimeSlots(value) {
+      state.meta.timeSlots = normalizeTimeSlots(value);
+      ensureCellsForTimes();
+      renderAll();
+      saveState();
+    }
+
+    function applyPreset(preset) {
+      if (preset === "day") {
+        state.meta.shiftName = "日中";
+        state.meta.timeSlots = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"];
+      }
+      if (preset === "night") {
+        state.meta.shiftName = "夜勤";
+        state.meta.timeSlots = ["18:00", "20:00", "22:00", "0:00", "2:00", "4:00", "6:00"];
+      }
+      if (preset === "short") {
+        state.meta.shiftName = "巡回";
+        state.meta.timeSlots = ["9:00", "12:00", "15:00", "18:00"];
+      }
+      ensureCellsForTimes();
+      renderAll();
+      saveState();
+    }
+
+    function exportState() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const safeDate = state.meta.recordDate || todayString();
+      link.href = url;
+      link.download = `checksheet-${safeDate}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function importState(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const parsed = JSON.parse(reader.result);
+        const dateText = parsed.meta?.recordDate || todayString();
+        state.meta = {
+          ...defaultMeta(dateText),
+          ...parsed.meta,
+          recordDate: dateText,
+          rowCount: Number(parsed.meta?.rowCount) || DEFAULT_ROWS,
+          timeSlots: normalizeTimeSlots(parsed.meta?.timeSlots)
+        };
+        state.rows = Array.isArray(parsed.rows) ? parsed.rows : [];
+        ensureRows(state.meta.rowCount);
+        ensureCellsForTimes();
+        renderAll();
+        saveState();
+      };
+      reader.readAsText(file, "utf-8");
+    }
+
+    els.recordDate.addEventListener("change", (event) => {
+      loadStateByDate(event.target.value || todayString());
+    });
+
+    els.shiftName.addEventListener("change", (event) => syncMetaField("shiftName", event.target.value));
+    els.staffName.addEventListener("input", (event) => syncMetaField("staffName", event.target.value));
+    els.unitName.addEventListener("input", (event) => syncMetaField("unitName", event.target.value));
+    els.sheetName.addEventListener("input", (event) => syncMetaField("sheetName", event.target.value));
+    els.residentLabel.addEventListener("input", (event) => {
+      state.meta.residentLabel = event.target.value;
+      renderAll();
+      saveState();
+    });
+    els.noteLabel.addEventListener("input", (event) => {
+      state.meta.noteLabel = event.target.value;
+      renderAll();
+      saveState();
+    });
+    els.timeSlots.addEventListener("change", (event) => updateTimeSlots(event.target.value));
+    els.handoverNote.addEventListener("input", (event) => syncMetaField("handoverNote", event.target.value));
+    els.legend1.addEventListener("input", (event) => syncMetaField("legend1", event.target.value));
+    els.legend2.addEventListener("input", (event) => syncMetaField("legend2", event.target.value));
+    els.legend3.addEventListener("input", (event) => syncMetaField("legend3", event.target.value));
+    els.rowCount.addEventListener("change", (event) => {
+      ensureRows(Number(event.target.value));
+      ensureCellsForTimes();
+      renderAll();
+      saveState();
+    });
+
+    els.presetDay.addEventListener("click", () => applyPreset("day"));
+    els.presetNight.addEventListener("click", () => applyPreset("night"));
+    els.presetShort.addEventListener("click", () => applyPreset("short"));
+
+    els.printButton.addEventListener("click", () => window.print());
+
+    els.pdfButton.addEventListener("click", () => {
+      const originalTitle = document.title;
+      const sheetName = state.meta.sheetName || "チェックシート";
+      const date = state.meta.recordDate || todayString();
+      document.title = `${sheetName}_${date}`;
+      window.print();
+      document.title = originalTitle;
+    });
+
+    function buildTeamsText() {
+      const m = state.meta;
+      const legendMap = {
+        1: m.legend1 || "排尿",
+        2: m.legend2 || "排便",
+        3: m.legend3 || "両方",
+        0: "なし"
+      };
+      const iconMap = {
+        1: "🔵",
+        2: "🟡",
+        3: "🟢",
+        0: "⬜"
+      };
+      const sheetName = m.sheetName || "チェックシート";
+      const lines = [];
+      lines.push(`━━━━━━━━━━━━━━━━━━━━`);
+      lines.push(`📋 ${sheetName}`);
+      lines.push(`📅 ${m.recordDate || "--"}　⏰ ${m.shiftName || "--"}`);
+      lines.push(`👤 記録者: ${m.staffName || "--"}　🏢 ${m.unitName || "--"}`);
+      lines.push(`━━━━━━━━━━━━━━━━━━━━`);
+
+      const slots = m.timeSlots;
+      let hasAnyRecord = false;
+
+      state.rows.forEach((row) => {
+        if (!row.name && row.cells.every(c => c === 0)) return;
+        hasAnyRecord = true;
+        const name = row.name || "（未入力）";
+        lines.push("");
+        lines.push(`👤 ${name}`);
+        lines.push(`${"─".repeat(16)}`);
+
+        slots.forEach((slot, i) => {
+          const val = row.cells[i] ?? 0;
+          const icon = iconMap[val];
+          const label = legendMap[val];
+          lines.push(`  ${slot.padEnd(6)}${icon} ${label}`);
+        });
+
+        if (row.note) {
+          lines.push(`  📝 ${row.note}`);
+        }
+      });
+
+      if (!hasAnyRecord) {
+        lines.push("");
+        lines.push("（記録なし）");
+      }
+
+      lines.push("");
+      lines.push(`━━━━━━━━━━━━━━━━━━━━`);
+      lines.push(`凡例　🔵${m.legend1 || "排尿"}　🟡${m.legend2 || "排便"}　🟢${m.legend3 || "両方"}　⬜なし`);
+
+      if (m.handoverNote) {
+        lines.push("");
+        lines.push(`📋 引き継ぎメモ`);
+        lines.push(m.handoverNote);
+      }
+
+      return lines.join("\n");
+    }
+
+    els.teamsButton.addEventListener("click", () => {
+      const text = buildTeamsText();
+      navigator.clipboard.writeText(text).then(() => {
+        els.teamsToast.style.display = "block";
+        setTimeout(() => { els.teamsToast.style.display = "none"; }, 4000);
+      }).catch(() => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        els.teamsToast.style.display = "block";
+        setTimeout(() => { els.teamsToast.style.display = "none"; }, 4000);
+      });
+    });
+    els.exportButton.addEventListener("click", exportState);
+    els.importButton.addEventListener("click", () => els.importFile.click());
+    els.importFile.addEventListener("change", (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      importState(file);
+      event.target.value = "";
+    });
+
+    els.resetButton.addEventListener("click", () => {
+      const ok = window.confirm("この日の記録を初期化します。よろしいですか？");
+      if (!ok) return;
+      localStorage.removeItem(recordStorageKey(state.meta.recordDate));
+      state.rows = [];
+      ensureRows(state.meta.rowCount);
+      ensureCellsForTimes();
+      renderAll();
+      saveState();
+    });
+
+    state.meta = defaultMeta(todayString());
+    loadStateByDate(state.meta.recordDate);
+    // グローバルに公開
+    window.saveMeta = saveMeta;
+    window.loadMetaFromGAS = loadMetaFromGAS;
+    window.sendSingleCell = sendSingleCell;
+    window.syncToGAS = syncToGAS;
+  </script>
+
+
+</body></html>
